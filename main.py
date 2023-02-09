@@ -1,12 +1,7 @@
-import os
-
 from aiogram import Bot, Dispatcher, executor, types
+from asyncio import sleep
 
-from dotenv import load_dotenv
-
-load_dotenv()
-
-TELEGRAM_TOKEN = os.getenv('TELEGRAM_TOKEN')
+from config import TELEGRAM_TOKEN
 
 bot = Bot(TELEGRAM_TOKEN)
 dispatcher = Dispatcher(bot)
@@ -19,6 +14,9 @@ async def send_dice(message: types.Message):
     await bot.send_message(user_id, f'Привет, {user}')
     dice = await bot.send_dice(user_id)
     dice_value = dice['dice']['value']
-    await bot.send_message(user_id,f'Выпало {dice_value}')
+    await sleep(3)
+    await bot.send_message(user_id, f'Выпало {dice_value}')
+
+
 if __name__ == '__main__':
     executor.start_polling(dispatcher)
